@@ -1,17 +1,17 @@
 const express = require('express');
+const dotenv = require('dotenv');
+const mongoose = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
+const newsRoutes = require('./routes/newsRoutes');
+dotenv.config();
 const app = express();
-const port = 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.listen(port, (err) => {
-    if (err) {
-        return console.log('Something bad happened', err);
-    }
-    console.log(`Server is listening on ${port}`);
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api', newsRoutes);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
-
-
-
-module.exports = app;
